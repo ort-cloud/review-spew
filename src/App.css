@@ -4,8 +4,7 @@
 
 body {
   font-family: "Open Sans", sans-serif;
-  font-size: 20px;
-  color: #444;
+  font-size: 16px;
   text-align: center;
   line-height: 1.5;
 }
@@ -24,31 +23,6 @@ nav {
   z-index: 10;
 }
 
-button {
-  float: right;
-  clear: right;
-  margin-right: 10px;
-}
-
 header {
   padding: 45px 15px;
-}
-
-section {
-  min-height: 200px;
-  padding: 30px 15px;
-  background-color: #bbb;
-}
-
-section:nth-child(even) {
-  background-color: #ddd;
-}
-
-p {
-  margin: 0 auto;
-  max-width: 650px;
-}
-
-p + p {
-  margin-top: 15px;
 }

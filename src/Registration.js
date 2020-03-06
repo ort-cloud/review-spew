@@ -2,18 +2,17 @@ import React, {Component} from "react";
 import "./App.css";
 import Form from "./components/Form/Form";
 
-class Login extends Component {
+class Registration extends Component {
   render() {
     return (
       <div>
         <header role='banner'>
           <h1>Login</h1>
         </header>
-        <h2>Welcome back!</h2>
         <Form />
       </div>
     );
   }
 }
 
-export default Login;
+export default Registration;
