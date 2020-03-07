@@ -1,6 +1,5 @@
 import React, {Component} from "react";
 import "./App.css";
-import {Link} from "react-router-dom";
 
 class Landing extends Component {
   constructor(props) {
@@ -8,7 +7,11 @@ class Landing extends Component {
     this.state = {
       username: "",
       password: "",
+      clickedLogin: false,
+      clickedSignUp: false,
     };
+    this.handleLogin = this.handleLogin.bind(this);
+    this.handleSignUp = this.handleSignUp.bind(this);
   }
 
   updateUsername(username) {
@@ -23,7 +26,7 @@ class Landing extends Component {
 
   handleRegSubmit(event) {
     event.preventDefault();
-    /* console.log("Submitted"); */
+    //console.log("Submitted");
     const {history} = this.props;
     const {username, password} = this.state;
     const newUser = {username, password};
@@ -62,7 +65,62 @@ class Landing extends Component {
       });
   }
 
+  handleLoginSubmit(event) {
+    event.preventDefault();
+    console.log("Logging in...");
+    const {history} = this.props;
+    const {username, password} = this.state;
+    const loginUser = {username, password};
+    const url = "http://localhost:8000/api/users/login";
+    const options = {
+      method: "POST",
+      body: JSON.stringify(loginUser),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch(url, options)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("something went wrong");
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data.error) {
+          throw new Error("something went wrong 2");
+        }
+        this.setState({
+          username: this.updateUsername(username),
+          password: this.updatePassword(password),
+        });
+      })
+      .then(() => {
+        history.push("/search");
+      })
+      .catch(err => {
+        this.setState({
+          error: err.message,
+        });
+      });
+  }
+
+  handleLogin() {
+    this.setState({
+      clickedLogin: true,
+    });
+  }
+
+  handleSignUp() {
+    this.setState({
+      clickedSignUp: true,
+    })
+  }
+
   render() {
+    const loginOrSignup = this.state.clickedLogin  ? event => this.handleLoginSubmit(event) : null || this.state.clickedSignUp ? event => this.handleRegSubmit(event) : null;
+
     return (
       <div className='App'>
         <main>
@@ -90,7 +148,7 @@ class Landing extends Component {
           <section>
             <form
               className='form'
-              onSubmit={event => this.handleRegSubmit(event)}
+              onSubmit={loginOrSignup}
             >
               <div>
                 <label>Username</label>
@@ -108,15 +166,12 @@ class Landing extends Component {
                   onChange={e => this.updatePassword(e.target.value)}
                 />
               </div>
-              {/* <Link to={"/search"}>
-                <button type='submit'>Login</button>
-              </Link> */}
-
-              <button type='submit'>Sign Up</button>
-
-              {/* <Link to={"/search"}>
-                <button type='submit'>Sign Up</button>
-              </Link> */}
+              <button type='submit' onClick={this.handleLogin}>
+                Login
+              </button>
+              <button type='submit' onClick={this.handleSignUp}>
+                Sigh up
+              </button>
             </form>
           </section>
         </main>
