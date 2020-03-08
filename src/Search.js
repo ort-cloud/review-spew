@@ -1,77 +1,90 @@
-import React from "react";
+import React, {Component} from "react";
 import "./App.css";
 import {Link} from "react-router-dom";
 
-function Search() {
-  return (
-    <div>
-      <nav>Nav</nav>
-      <header>
-        <p>[placeholder for logo]</p>
-        <p>[logo will also be button returning to the landing page]</p>
-        <Link to={"/"}>
-          <h1>Search Page</h1>
-        </Link>
-        <h2>The searchiest of search pages</h2>
-      </header>
+class Search extends Component {
+  constructor(props){
+    super(props)
 
-      <section>
-        <h3>Enter movie title in the box below. Spew results.</h3>
-        <input
-          type='text'
-          name='search-box'
-          id='search-box'
-          placeholder='Enter movie title'
-        />
-        <button type='submit'>Search...</button>
-      </section>
+    this.state = {
+      movieTitle: "",
+    }
 
-      <section>
-        <p>
-          [Results from server will populate below with the option to save if
-          logged in]
-        </p>
-        <p>[If no search made this section will not appear]</p>
-      </section>
+    this.handleMovieTitle = this.handleMovieTitle.bind(this)
+  }
 
-      <section>
-        <h2>Review 1</h2>
-        <p>Movie Title</p>
-        <p>Genre</p>
-        <p>Review Author</p>
-        <p>Review url</p>
-        <p>Review text</p>
-        <button>Save review</button>
-      </section>
+  
 
-      <section>
-        <h2>Review 2</h2>
-        <p>Movie Title</p>
-        <p>Genre</p>
-        <p>Review Author</p>
-        <p>Review url</p>
-        <p>Review text</p>
-        <button>Save review</button>
-      </section>
+  handleSearch(event){
+    event.preventDefault();
+    const searchText = this.state.movieTitle
+    const url= `http://localhost:8000/api/search/${searchText}`
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+    fetch(url, options)
+        .then(res => {
+          if (!res.ok) {
+            throw new Error("something went wrong");
+          }
+          return res.json();
+        })
+        .then(data => {
+          if (data.error) {
+            throw new Error("something went wrong 2");
+          }
+          console.log(data);
+        })
+        .catch(err => {
+          this.setState({
+            error: err.message,
+          });
+        });
+    }
+  
+    handleMovieTitle(event){
+      this.setState({movieTitle: event.target.value})
+    }
+          
+  render() {
 
-      <section>
-        <h2>Review 3</h2>
-        <p>Movie Title</p>
-        <p>Genre</p>
-        <p>Review Author</p>
-        <p>Review url</p>
-        <p>Review text</p>
-        <button>Save review</button>
-      </section>
 
-      <section>
-        <p>[saved list page will have an option to change username]</p>
-        <Link to={"/savedreviews"}>
-          <button>Go To Saved List</button>
-        </Link>
-      </section>
-    </div>
-  );
+    return (
+      <div>
+        <header>
+          <p>[placeholder for logo]</p>
+          <p>[logo will also be button returning to the landing page]</p>
+          <Link to={"/"}>
+            <h1>Search Page</h1>
+          </Link>
+          <h2>The searchiest of search pages</h2>
+        </header>
+
+        <form onSubmit={event => this.handleSearch(event)}>
+          <h3>Enter movie title in the box below. Spew results.</h3>
+          <input
+            type='text'
+            name='search-box'
+            id='search-box'
+            placeholder='Enter movie title'
+            value={this.state.movieTitle}
+            onChange={this.handleMovieTitle}
+          />
+          <button type='submit'>Search...</button>
+        </form>
+
+        <section>
+          <p>[saved list page will have an option to change username]</p>
+          <Link to={"/savedreviews"}>
+            <button>Go To Saved List</button>
+          </Link>
+        </section>
+      </div>
+    );
+  }
 }
 
 export default Search;
