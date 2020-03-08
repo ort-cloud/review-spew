@@ -3,54 +3,82 @@ import "./App.css";
 import {Link} from "react-router-dom";
 
 class Search extends Component {
-  constructor(props){
-    super(props)
-
+  constructor(props) {
+    super(props);
     this.state = {
       movieTitle: "",
-    }
-
-    this.handleMovieTitle = this.handleMovieTitle.bind(this)
+      reviewArr: [],
+    };
+    this.handleMovieTitle = this.handleMovieTitle.bind(this);
   }
 
-  
-
-  handleSearch(event){
+  handleSearch(event) {
     event.preventDefault();
-    const searchText = this.state.movieTitle
-    const url= `http://localhost:8000/api/search/${searchText}`
+    const searchText = this.state.movieTitle;
+    const url = `http://localhost:8000/api/search/${searchText}`;
     const options = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
       },
-    }
+    };
     fetch(url, options)
-        .then(res => {
-          if (!res.ok) {
-            throw new Error("something went wrong");
-          }
-          return res.json();
-        })
-        .then(data => {
-          if (data.error) {
-            throw new Error("something went wrong 2");
-          }
-          console.log(data);
-        })
-        .catch(err => {
-          this.setState({
-            error: err.message,
-          });
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("something went wrong");
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data.error) {
+          throw new Error("something went wrong 2");
+        }
+        this.setState({
+          reviewArr: data,
         });
-    }
-  
-    handleMovieTitle(event){
-      this.setState({movieTitle: event.target.value})
-    }
-          
-  render() {
+      })
+      .catch(err => {
+        this.setState({
+          error: err.message,
+        });
+      });
+  }
 
+  handleMovieTitle(event) {
+    this.setState({movieTitle: event.target.value});
+  }
+
+  render() {
+    /* console.log(this.state.reviewArr); */
+
+    const mapReviewRes = this.state.reviewArr;
+
+    const displayReviews = mapReviewRes.map(item => {
+      return (
+        
+        <div>
+          <ul>
+            <li> {item.movie_title}</li>
+
+            <li>
+              <span>Genre:</span> {item.genre}
+            </li>
+
+            <li>
+              <span>Author:</span> {item.review_author}
+            </li>
+
+            <li>
+              <span>URL:</span> {item.review_url}
+            </li>
+
+            <li>
+              <span>Blurb:</span> {item.review_text}
+            </li>
+          </ul>
+        </div>
+      );
+    });
 
     return (
       <div>
@@ -76,8 +104,9 @@ class Search extends Component {
           <button type='submit'>Search...</button>
         </form>
 
+        <div>{displayReviews}</div>
+
         <section>
-          <p>[saved list page will have an option to change username]</p>
           <Link to={"/savedreviews"}>
             <button>Go To Saved List</button>
           </Link>
