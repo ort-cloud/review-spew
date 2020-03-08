@@ -55,9 +55,9 @@ class Search extends Component {
     });
   }
 
- /*  handleTitleNotFound(){
-    
-  } */
+  resetForm = () => {
+    this.myFormRef.reset();
+  };
 
   render() {
     /* console.log(this.state.reviewArr); */
@@ -106,7 +106,10 @@ class Search extends Component {
           <h2>The searchiest of search pages</h2>
         </header>
         {serverErrorMessage}
-        <form onSubmit={event => this.handleSearch(event)}>
+        <form
+          ref={el => (this.myFormRef = el)}
+          onSubmit={event => this.handleSearch(event)}
+        >
           <h3>Enter movie title in the box below. Spew results.</h3>
           <input
             type='text'
