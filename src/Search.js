@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import "./App.css";
 import {Link} from "react-router-dom";
+import uuid from "react-uuid";
 
 class Search extends Component {
   constructor(props) {
@@ -48,31 +49,45 @@ class Search extends Component {
     this.setState({movieTitle: event.target.value});
   }
 
+  capString(str) {
+    return str.replace(/\w\S*/g, function(txt) {
+      return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+    });
+  }
+
+ /*  handleTitleNotFound(){
+    
+  } */
+
   render() {
     /* console.log(this.state.reviewArr); */
+    const serverErrorMessage = this.state.error ? (
+      <div className='create-error'>Don't Have that one yet, sorry.</div>
+    ) : (
+      ""
+    );
 
     const mapReviewRes = this.state.reviewArr;
 
     const displayReviews = mapReviewRes.map(item => {
       return (
-        
         <div>
           <ul>
-            <li> {item.movie_title}</li>
+            <li key={uuid()}>{item.movie_title}</li>
 
-            <li>
+            <li key={uuid()}>
               <span>Genre:</span> {item.genre}
             </li>
 
-            <li>
+            <li key={uuid()}>
               <span>Author:</span> {item.review_author}
             </li>
 
-            <li>
+            <li key={uuid()}>
               <span>URL:</span> {item.review_url}
             </li>
 
-            <li>
+            <li key={uuid()}>
               <span>Blurb:</span> {item.review_text}
             </li>
           </ul>
@@ -90,7 +105,7 @@ class Search extends Component {
           </Link>
           <h2>The searchiest of search pages</h2>
         </header>
-
+        {serverErrorMessage}
         <form onSubmit={event => this.handleSearch(event)}>
           <h3>Enter movie title in the box below. Spew results.</h3>
           <input
@@ -98,7 +113,7 @@ class Search extends Component {
             name='search-box'
             id='search-box'
             placeholder='Enter movie title'
-            value={this.state.movieTitle}
+            value={this.capString(this.state.movieTitle)}
             onChange={this.handleMovieTitle}
           />
           <button type='submit'>Search...</button>
