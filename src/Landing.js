@@ -26,17 +26,19 @@ class Landing extends Component {
     this.setState({password: password});
   }
 
-  handleSubmitBasicAuth = event => {
+  handleBasicAuthLogin = event => {
     event.preventDefault();
-
     console.log("Logging in...");
     const {history} = this.props;
     const {username, password} = this.state;
-    const loginUser = {username, password};
+    /* const loginUser = {username, password}; */
     const url = "http://localhost:8000/api/users/login";
     const options = {
       method: "POST",
-      body: JSON.stringify(loginUser),
+      body: JSON.stringify({
+        username: this.state.username,
+        password: this.state.password,
+      }),
       headers: {
         "Content-Type": "application/json",
       },
@@ -72,9 +74,9 @@ class Landing extends Component {
       });
   };
 
-  handleRegSubmit(event) {
+  handleBasicAuthReg(event) {
     event.preventDefault();
-    //console.log("Submitted");
+    console.log("Regestering...");
     const {username, password} = this.state;
     const newUser = {username, password};
     const url = "http://localhost:8000/api/users";
@@ -85,6 +87,10 @@ class Landing extends Component {
         "Content-Type": "application/json",
       },
     };
+
+    TokenService.saveAuthToken(
+      TokenService.makeBasicAuthToken(username.value, password.value)
+    );
 
     fetch(url, options)
       .then(res => {
@@ -112,27 +118,27 @@ class Landing extends Component {
       });
   }
 
-  handleLogin() {
+  handleLogin = () => {
     this.setState({
       clickedLogin: true,
     });
-  }
+  };
 
   handleLogOut = () => {
     localStorage.clear();
   };
 
-  handleSignUp() {
+  handleSignUp = () => {
     this.setState({
       clickedSignUp: true,
     });
-  }
+  };
 
   render() {
     const loginOrSignup = this.state.clickedLogin
-      ? event => this.handleLoginSubmit(event)
+      ? event => this.handleBasicAuthLogin(event)
       : null || this.state.clickedSignUp
-      ? event => this.handleRegSubmit(event)
+      ? event => this.handleBasicAuthReg(event)
       : null;
 
     return (
@@ -160,10 +166,7 @@ class Landing extends Component {
           </section>
 
           <section>
-            <form
-              className='form'
-              onSubmit={{loginOrSignup} && this.handleSubmitBasicAuth}
-            >
+            <form className='form' onSubmit={loginOrSignup}>
               <div>
                 <label>Username</label>
                 <input
