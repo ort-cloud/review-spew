@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import TokenService from "./service/token-service";
 import {withRouter} from "react-router-dom";
 import "./App.css";
 
@@ -25,10 +26,55 @@ class Landing extends Component {
     this.setState({password: password});
   }
 
+  handleSubmitBasicAuth = event => {
+    event.preventDefault();
+
+    console.log("Logging in...");
+    const {history} = this.props;
+    const {username, password} = this.state;
+    const loginUser = {username, password};
+    const url = "http://localhost:8000/api/users/login";
+    const options = {
+      method: "POST",
+      body: JSON.stringify(loginUser),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    TokenService.saveAuthToken(
+      TokenService.makeBasicAuthToken(username.value, password.value)
+    );
+
+    fetch(url, options)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("something went wrong");
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data.error) {
+          throw new Error("something went wrong 2");
+        }
+        this.setState({
+          username: this.updateUsername(username),
+          password: this.updatePassword(password),
+        });
+      })
+      .then(() => {
+        history.push("/search");
+      })
+      .catch(err => {
+        this.setState({
+          error: err.message,
+        });
+      });
+  };
+
   handleRegSubmit(event) {
     event.preventDefault();
     //console.log("Submitted");
-    /* const {history} = this.props; */
     const {username, password} = this.state;
     const newUser = {username, password};
     const url = "http://localhost:8000/api/users";
@@ -66,61 +112,28 @@ class Landing extends Component {
       });
   }
 
-  handleLoginSubmit(event) {
-    event.preventDefault();
-    console.log("Logging in...");
-    const {history} = this.props;
-    const {username, password} = this.state;
-    const loginUser = {username, password};
-    const url = "http://localhost:8000/api/users/login";
-    const options = {
-      method: "POST",
-      body: JSON.stringify(loginUser),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-
-    fetch(url, options)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error("something went wrong");
-        }
-        return res.json();
-      })
-      .then(data => {
-        if (data.error) {
-          throw new Error("something went wrong 2");
-        }
-        this.setState({
-          username: this.updateUsername(username),
-          password: this.updatePassword(password),
-        });
-      })
-      .then(() => {
-        history.push("/search");
-      })
-      .catch(err => {
-        this.setState({
-          error: err.message,
-        });
-      });
-  }
-
   handleLogin() {
     this.setState({
       clickedLogin: true,
     });
   }
 
+  handleLogOut = () => {
+    localStorage.clear();
+  };
+
   handleSignUp() {
     this.setState({
       clickedSignUp: true,
-    })
+    });
   }
 
   render() {
-    const loginOrSignup = this.state.clickedLogin  ? event => this.handleLoginSubmit(event) : null || this.state.clickedSignUp ? event => this.handleRegSubmit(event) : null;
+    const loginOrSignup = this.state.clickedLogin
+      ? event => this.handleLoginSubmit(event)
+      : null || this.state.clickedSignUp
+      ? event => this.handleRegSubmit(event)
+      : null;
 
     return (
       <div className='App'>
@@ -149,7 +162,7 @@ class Landing extends Component {
           <section>
             <form
               className='form'
-              onSubmit={loginOrSignup}
+              onSubmit={{loginOrSignup} && this.handleSubmitBasicAuth}
             >
               <div>
                 <label>Username</label>
@@ -173,6 +186,8 @@ class Landing extends Component {
               <button type='submit' onClick={this.handleSignUp}>
                 Sigh up
               </button>
+
+              <button onClick={this.handleLogOut}>Logout</button>
             </form>
           </section>
         </main>
