@@ -2,6 +2,8 @@ import React, {Component} from "react";
 import "./App.css";
 import Form from "./components/Form/Form";
 
+//! May not need this component at all.
+
 class Login extends Component {
   render() {
     return (
