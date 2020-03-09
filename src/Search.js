@@ -15,8 +15,7 @@ class Search extends Component {
 
   handleSearch(event) {
     event.preventDefault();
-    const searchText = this.state.movieTitle;
-    const url = `http://localhost:8000/api/search/${searchText}`;
+    const url = `http://localhost:8000/api/search/${this.state.movieTitle}`;
     const options = {
       method: "GET",
       headers: {
@@ -45,6 +44,10 @@ class Search extends Component {
       });
   }
 
+  /* handleSaveReview(){
+
+  } */
+
   handleMovieTitle(event) {
     this.setState({movieTitle: event.target.value});
   }
@@ -60,7 +63,6 @@ class Search extends Component {
   };
 
   render() {
-    /* console.log(this.state.reviewArr); */
     const serverErrorMessage = this.state.error ? (
       <div className='create-error'>Don't Have that one yet, sorry.</div>
     ) : (
@@ -90,6 +92,8 @@ class Search extends Component {
             <li key={uuid()}>
               <span>Blurb:</span> {item.review_text}
             </li>
+
+            <li></li>
           </ul>
         </div>
       );

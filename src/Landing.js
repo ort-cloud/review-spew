@@ -1,4 +1,5 @@
 import React, {Component} from "react";
+import {withRouter} from "react-router-dom";
 import "./App.css";
 
 class Landing extends Component {
@@ -27,7 +28,7 @@ class Landing extends Component {
   handleRegSubmit(event) {
     event.preventDefault();
     //console.log("Submitted");
-    const {history} = this.props;
+    /* const {history} = this.props; */
     const {username, password} = this.state;
     const newUser = {username, password};
     const url = "http://localhost:8000/api/users";
@@ -56,7 +57,7 @@ class Landing extends Component {
         });
       })
       .then(() => {
-        history.push("/search");
+        this.props.history.push("/search");
       })
       .catch(err => {
         this.setState({
@@ -180,4 +181,4 @@ class Landing extends Component {
   }
 }
 
-export default Landing;
+export default withRouter(Landing);
