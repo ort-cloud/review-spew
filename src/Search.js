@@ -9,13 +9,13 @@ class Search extends Component {
     this.state = {
       movieTitle: "",
       reviewArr: [],
-      users_id: ""
+      users_id: "",
     };
     this.handleMovieTitle = this.handleMovieTitle.bind(this);
   }
 
   componentDidMount() {
-    const getUser = localStorage.getItem("username")
+    const getUser = localStorage.getItem("username");
     const url = `http://localhost:8000/api/users/username/${getUser}`;
     const options = {
       method: "GET",
@@ -32,11 +32,11 @@ class Search extends Component {
         return res;
       })
       .then(res => res.json())
-      .then((data => {
+      .then(data => {
         this.setState({
-          users_id: data.users_id
-        })
-      }));
+          users_id: data.users_id,
+        });
+      });
   }
 
   handleSearch(event) {
@@ -70,9 +70,41 @@ class Search extends Component {
       });
   }
 
-  /* handleSaveReview(){
+  handleSaveReview = reviews_id => {
+    this.state.reviewArr.filter(item => {
+      return item.reviews_id;
+    });
+    const url = `http://localhost:8000/api/reviews/savedReview`;
+    const options = {
+      method: "POST",
+      body: JSON.stringify({
+        users_id: this.state.users_id,
+        reviews_id: reviews_id,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
 
-  } */
+    fetch(url, options)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Something went wrong");
+        }
+        return res.json();
+      })
+      .then(data => {
+        if (data.error) {
+          throw new Error("Somethng went wrong 2");
+        }
+        alert("Saved")
+      })
+      .catch(err => {
+        this.setState({
+          error: err.message,
+        });
+      });
+  };
 
   handleMovieTitle(event) {
     this.setState({movieTitle: event.target.value});
@@ -89,8 +121,6 @@ class Search extends Component {
   };
 
   render() {
-    console.table(this.state);
-
     const serverErrorMessage = this.state.error ? (
       <div className='create-error'>Don't Have that one yet, sorry.</div>
     ) : (
@@ -102,25 +132,22 @@ class Search extends Component {
         <div>
           <ul>
             <li key={uuid()}>{item.movie_title}</li>
-
             <li key={uuid()}>
               <span>Genre:</span> {item.genre}
             </li>
-
             <li key={uuid()}>
               <span>Author:</span> {item.review_author}
             </li>
-
             <li key={uuid()}>
               <span>URL:</span> {item.review_url}
             </li>
-
             <li key={uuid()}>
               <span>Blurb:</span> {item.review_text}
             </li>
-
             <li>
-              <button>Save Trigger</button>
+              <button onClick={() => this.handleSaveReview(item.reviews_id)}>
+                Save Trigger
+              </button>
             </li>
           </ul>
         </div>
