@@ -6,9 +6,36 @@ class Reviews extends Component {
   constructor(props) {
     super(props);
   }
+
+  componentDidMount() {
+    const url = `http://localhost:8000/api/reviews/savedReview/user/2`;
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch(url, options)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Oh, no. Error!");
+        }
+        return res;
+      })
+      .then(res => res.json())
+      .then(data => {
+        console.log(`DATA: ${data}`);
+      });
+  }
+
+
+
   render() {
 
-    console.log(this.props.location.state);
+
+
+    /* console.log(this.props.location.state); */
     return (
       <div>
         <header>
@@ -20,12 +47,6 @@ class Reviews extends Component {
           <h2>The searchiest of search pages</h2>
         </header>
 
-
-
-
-
-
-
         <Link to={"/search"}>
           <button>Back To Search</button>
         </Link>
@@ -34,3 +55,5 @@ class Reviews extends Component {
   }
 }
 export default Reviews;
+
+
