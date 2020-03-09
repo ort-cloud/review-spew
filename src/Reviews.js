@@ -1,58 +1,36 @@
-import React from "react";
+import React, {Component} from "react";
 import {Link} from "react-router-dom";
 import "./App.css";
 
-function Reviews() {
-  return (
-    <div>
-      <main role='main'>
-        <header role='banner'>
-          <h1>Review List</h1>
-          <p>[Below will be a list of saved reviews]</p>
+class Reviews extends Component {
+  constructor(props) {
+    super(props);
+  }
+  render() {
+
+    console.log(this.props.location.state);
+    return (
+      <div>
+        <header>
+          <p>[placeholder for logo]</p>
+          <p>[logo will also be button returning to the landing page]</p>
+          <Link to={"/"}>
+            <h1>Reviews</h1>
+          </Link>
+          <h2>The searchiest of search pages</h2>
         </header>
 
-        <section>
-          <form>
-            <label htmlFor='change-username'>Change Username</label>
-            <input type='text' />
-          </form>
-        </section>
 
-        <section>
-          <h2>Review</h2>
-          <p>[placeholder for review text blurb]</p>
-          <button>Delete Review</button>
-        </section>
 
-        <section>
-          <h2>Review</h2>
-          <p>[placeholder for review text blurb]</p>
-          <button>Delete Review</button>
-        </section>
 
-        <section>
-          <h2>Review</h2>
-          <p>[placeholder for review text blurb]</p>
-          <button>Delete Review</button>
-        </section>
 
-        <section>
-          <h2>Review</h2>
-          <p>[placeholder for review text blurb]</p>
-          <button>Delete Review</button>
-        </section>
 
-        <section>
-          <h2>Review</h2>
-          <p>[placeholder for review text blurb]</p>
-          <button>Delete Review</button>
-        </section>
 
         <Link to={"/search"}>
           <button>Back To Search</button>
         </Link>
-      </main>
-    </div>
-  );
+      </div>
+    );
+  }
 }
 export default Reviews;

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import "./App.css";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import uuid from "react-uuid";
 
 class Search extends Component {
@@ -184,7 +184,10 @@ class Search extends Component {
         <div>{displayReviews}</div>
 
         <section>
-          <Link to={"/savedreviews"}>
+          <Link to={{
+            pathname: "/savedreviews",
+            state: {users_id: this.state.users_id}
+          }}>
             <button>Go To Saved List</button>
           </Link>
         </section>
@@ -193,4 +196,4 @@ class Search extends Component {
   }
 }
 
-export default Search;
+export default withRouter(Search);
