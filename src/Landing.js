@@ -31,6 +31,7 @@ class Landing extends Component {
     console.log("Logging in...");
     const {history} = this.props;
     const {username, password} = this.state;
+    localStorage.setItem('username', username)
     /* const loginUser = {username, password}; */
     const url = "http://localhost:8000/api/users/login";
     const options = {
@@ -141,6 +142,8 @@ class Landing extends Component {
       ? event => this.handleBasicAuthReg(event)
       : null;
 
+      console.log(this.state);
+
     return (
       <div className='App'>
         <main>
@@ -190,7 +193,7 @@ class Landing extends Component {
                 Sigh up
               </button>
 
-              <button onClick={this.handleLogOut}>Logout</button>
+              <button onClick={()=> this.handleLogOut()}>Logout</button>
             </form>
           </section>
         </main>

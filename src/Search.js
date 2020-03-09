@@ -9,8 +9,34 @@ class Search extends Component {
     this.state = {
       movieTitle: "",
       reviewArr: [],
+      users_id: ""
     };
     this.handleMovieTitle = this.handleMovieTitle.bind(this);
+  }
+
+  componentDidMount() {
+    const getUser = localStorage.getItem("username")
+    const url = `http://localhost:8000/api/users/username/${getUser}`;
+    const options = {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch(url, options)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("Oh, no. Error!");
+        }
+        return res;
+      })
+      .then(res => res.json())
+      .then((data => {
+        this.setState({
+          users_id: data.users_id
+        })
+      }));
   }
 
   handleSearch(event) {
@@ -63,14 +89,14 @@ class Search extends Component {
   };
 
   render() {
+    console.table(this.state);
+
     const serverErrorMessage = this.state.error ? (
       <div className='create-error'>Don't Have that one yet, sorry.</div>
     ) : (
       ""
     );
-
     const mapReviewRes = this.state.reviewArr;
-
     const displayReviews = mapReviewRes.map(item => {
       return (
         <div>
@@ -93,7 +119,9 @@ class Search extends Component {
               <span>Blurb:</span> {item.review_text}
             </li>
 
-            <li></li>
+            <li>
+              <button>Save Trigger</button>
+            </li>
           </ul>
         </div>
       );
