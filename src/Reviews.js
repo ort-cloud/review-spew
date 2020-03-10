@@ -42,25 +42,27 @@ class Reviews extends Component {
               }
               return res;
             })
-            .then(res =>{
-              return res.json()
+            .then(res => {
+              return res.json();
             });
         });
         Promise.all(promises).then(data => {
-          let arrayArray = []
+          let arrayArray = [];
           data.map(item => {
             return arrayArray.push(item);
           });
-          console.log(arrayArray);
+          this.setState({
+            userReviewArr: arrayArray,
+          });
         });
       });
   }
 
   render() {
-    /* console.log('STATE.USERREVIEWARR:', this.state.userReviewArr); */
-    /* console.log(this.props.location.state); */
-    /*     const mapUserReviews = this.state.userReviewArr;
-    const displaySavedReviews = mapUserReviews.map(item => {
+    const mapUserReviews = this.state.userReviewArr;
+    const flattened = [].concat.apply([], mapUserReviews)
+    const displaySavedReviews = flattened.map((item) => {
+
       return (
         <div>
           <ul>
@@ -77,15 +79,10 @@ class Reviews extends Component {
             <li key={uuid()}>
               <span>Blurb:</span> {item.review_text}
             </li>
-            <li>
-              <button onClick={() => this.handleSaveReview(item.reviews_id)}>
-                Save Trigger
-              </button>
-            </li>
           </ul>
         </div>
       );
-    }); */
+    });
 
     return (
       <div>
@@ -98,7 +95,7 @@ class Reviews extends Component {
           <h2>The searchiest of search pages</h2>
         </header>
 
-        {/* <div>{displaySavedReviews}</div> */}
+        <div>{displaySavedReviews}</div>
 
         <Link to={"/search"}>
           <button>Back To Search</button>
