@@ -1,10 +1,14 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
+import uuid from "react-uuid";
 import "./App.css";
 
 class Reviews extends Component {
   constructor(props) {
     super(props);
+    this.state = {
+      userReviewArr: [],
+    };
   }
 
   componentDidMount() {
@@ -15,7 +19,6 @@ class Reviews extends Component {
         "Content-Type": "application/json",
       },
     };
-
     fetch(url, options)
       .then(res => {
         if (!res.ok) {
@@ -25,17 +28,65 @@ class Reviews extends Component {
       })
       .then(res => res.json())
       .then(data => {
-        console.log(`DATA: ${data}`);
+        console.log("USER DATA:", data);
+        let idArray = [];
+        data.filter(item => {
+          return idArray.push(item.reviews_id);
+        });
+        console.log(`ID ARRAY:`, idArray);
+        const promises = idArray.map(item => {
+          return fetch(`http://localhost:8000/api/reviews/${item}`, options)
+            .then(res => {
+              if (!res.ok) {
+                throw new Error("Oh, no. Error!");
+              }
+              return res;
+            })
+            .then(res =>{
+              return res.json()
+            });
+        });
+        Promise.all(promises).then(data => {
+          let arrayArray = []
+          data.map(item => {
+            return arrayArray.push(item);
+          });
+          console.log(arrayArray);
+        });
       });
   }
 
-
-
   render() {
-
-
-
+    /* console.log('STATE.USERREVIEWARR:', this.state.userReviewArr); */
     /* console.log(this.props.location.state); */
+    /*     const mapUserReviews = this.state.userReviewArr;
+    const displaySavedReviews = mapUserReviews.map(item => {
+      return (
+        <div>
+          <ul>
+            <li key={uuid()}>{item.movie_title}</li>
+            <li key={uuid()}>
+              <span>Genre:</span> {item.genre}
+            </li>
+            <li key={uuid()}>
+              <span>Author:</span> {item.review_author}
+            </li>
+            <li key={uuid()}>
+              <span>URL:</span> {item.review_url}
+            </li>
+            <li key={uuid()}>
+              <span>Blurb:</span> {item.review_text}
+            </li>
+            <li>
+              <button onClick={() => this.handleSaveReview(item.reviews_id)}>
+                Save Trigger
+              </button>
+            </li>
+          </ul>
+        </div>
+      );
+    }); */
+
     return (
       <div>
         <header>
@@ -47,6 +98,8 @@ class Reviews extends Component {
           <h2>The searchiest of search pages</h2>
         </header>
 
+        {/* <div>{displaySavedReviews}</div> */}
+
         <Link to={"/search"}>
           <button>Back To Search</button>
         </Link>
@@ -55,5 +108,3 @@ class Reviews extends Component {
   }
 }
 export default Reviews;
-
-

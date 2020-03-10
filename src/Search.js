@@ -121,13 +121,14 @@ class Search extends Component {
   };
 
   render() {
+    console.log(this.state.reviewArr);
     const serverErrorMessage = this.state.error ? (
       <div className='create-error'>Don't Have that one yet, sorry.</div>
     ) : (
       ""
     );
     const mapReviewRes = this.state.reviewArr;
-    const displayReviews = mapReviewRes.map(item => {
+    const displaySearchReviews = mapReviewRes.map(item => {
       return (
         <div>
           <ul>
@@ -181,7 +182,7 @@ class Search extends Component {
           <button type='submit'>Search...</button>
         </form>
 
-        <div>{displayReviews}</div>
+        <div>{displaySearchReviews}</div>
 
         <section>
           <Link to={{
