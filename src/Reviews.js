@@ -8,11 +8,12 @@ class Reviews extends Component {
     super(props);
     this.state = {
       userReviewArr: [],
+      savedReviewId: [],
     };
   }
 
   componentDidMount() {
-    const url = `http://localhost:8000/api/reviews/savedReview/user/2`;
+    const url = `http://localhost:8000/api/reviews/savedReview/user/${this.props.location.state.users_id}`;
     const options = {
       method: "GET",
       headers: {
@@ -28,12 +29,14 @@ class Reviews extends Component {
       })
       .then(res => res.json())
       .then(data => {
-        console.log("USER DATA:", data);
         let idArray = [];
+        let savedIdArray = [...data];
         data.filter(item => {
           return idArray.push(item.reviews_id);
         });
-        console.log(`ID ARRAY:`, idArray);
+        this.setState({
+          savedReviewId: savedIdArray,
+        });
         const promises = idArray.map(item => {
           return fetch(`http://localhost:8000/api/reviews/${item}`, options)
             .then(res => {
@@ -58,11 +61,38 @@ class Reviews extends Component {
       });
   }
 
+  handleDelete = reviews_id => {
+    let deleteArray = [];
+    this.state.savedReviewId.filter(item => {
+      return item.reviews_id === reviews_id ? deleteArray.push(item.id) : null;
+    });
+
+    const url = `http://localhost:8000/api/reviews/savedReview/${deleteArray}`;
+    const options = {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+
+    fetch(url, options)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("something went wrong");
+        }
+        return res;
+      })
+      .catch(err => {
+        this.setState({
+          error: err.message,
+        });
+      });
+  };
+
   render() {
     const mapUserReviews = this.state.userReviewArr;
-    const flattened = [].concat.apply([], mapUserReviews)
-    const displaySavedReviews = flattened.map((item) => {
-
+    const flattened = [].concat.apply([], mapUserReviews);
+    const displaySavedReviews = flattened.map(item => {
       return (
         <div>
           <ul>
@@ -80,6 +110,9 @@ class Reviews extends Component {
               <span>Blurb:</span> {item.review_text}
             </li>
           </ul>
+          <button onClick={() => this.handleDelete(item.reviews_id)}>
+            Delete
+          </button>
         </div>
       );
     });
@@ -94,9 +127,7 @@ class Reviews extends Component {
           </Link>
           <h2>The searchiest of search pages</h2>
         </header>
-
         <div>{displaySavedReviews}</div>
-
         <Link to={"/search"}>
           <button>Back To Search</button>
         </Link>

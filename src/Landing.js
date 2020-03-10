@@ -28,7 +28,6 @@ class Landing extends Component {
     event.preventDefault();
     const {history} = this.props;
     const {username, password} = this.state;
-    /* localStorage.setItem("username", username); */
     const url = "http://localhost:8000/api/users/login";
     const options = {
       method: "POST",
@@ -74,7 +73,6 @@ class Landing extends Component {
     event.preventDefault();
     const {history} = this.props;
     const {username, password} = this.state;
-    /* localStorage.setItem("username", username); */
     const newUser = {username, password};
     const url = "http://localhost:8000/api/users";
     const options = {
@@ -84,11 +82,9 @@ class Landing extends Component {
         "Content-Type": "application/json",
       },
     };
-
     TokenService.saveAuthToken(
       TokenService.makeBasicAuthToken(username.value, password.value)
     );
-
     fetch(url, options)
       .then(res => {
         if (!res.ok) {

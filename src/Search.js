@@ -35,6 +35,11 @@ class Search extends Component {
       .then(data => {
         this.setState({
           users_id: data.users_id,
+        })
+      })
+      .catch(err => {
+        this.setState({
+          error: err.message,
         });
       });
   }
