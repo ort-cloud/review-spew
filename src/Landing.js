@@ -24,11 +24,11 @@ class Landing extends Component {
     this.setState({password: password});
   }
 
-  handleBasicAuthLogin = event => {
+  handleBasicAuthLogin(event) {
     event.preventDefault();
     const {history} = this.props;
     const {username, password} = this.state;
-    localStorage.setItem("username", username);
+    /* localStorage.setItem("username", username); */
     const url = "http://localhost:8000/api/users/login";
     const options = {
       method: "POST",
@@ -40,11 +40,9 @@ class Landing extends Component {
         "Content-Type": "application/json",
       },
     };
-
     TokenService.saveAuthToken(
       TokenService.makeBasicAuthToken(username.value, password.value)
     );
-
     fetch(url, options)
       .then(res => {
         if (!res.ok) {
@@ -62,6 +60,7 @@ class Landing extends Component {
         });
       })
       .then(() => {
+        localStorage.setItem("username", username);
         history.push("/search");
       })
       .catch(err => {
@@ -73,7 +72,9 @@ class Landing extends Component {
 
   handleBasicAuthReg(event) {
     event.preventDefault();
+    const {history} = this.props;
     const {username, password} = this.state;
+    /* localStorage.setItem("username", username); */
     const newUser = {username, password};
     const url = "http://localhost:8000/api/users";
     const options = {
@@ -105,7 +106,8 @@ class Landing extends Component {
         });
       })
       .then(() => {
-        this.props.history.push("/search");
+        localStorage.setItem("username", username);
+        history.push("/search");
       })
       .catch(err => {
         this.setState({

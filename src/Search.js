@@ -97,7 +97,7 @@ class Search extends Component {
         if (data.error) {
           throw new Error("Somethng went wrong 2");
         }
-        alert("Saved")
+        alert("Saved");
       })
       .catch(err => {
         this.setState({
@@ -185,10 +185,12 @@ class Search extends Component {
         <div>{displaySearchReviews}</div>
 
         <section>
-          <Link to={{
-            pathname: "/savedreviews",
-            state: {users_id: this.state.users_id}
-          }}>
+          <Link
+            to={{
+              pathname: "/savedreviews",
+              state: {users_id: this.state.users_id},
+            }}
+          >
             <button>Go To Saved List</button>
           </Link>
         </section>
