@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Link} from "react-router-dom";
-import uuid from "react-uuid";
+import uuid from "uuid";
+
 import "./App.css";
 
 class Reviews extends Component {
@@ -61,6 +62,15 @@ class Reviews extends Component {
       });
   }
 
+
+  removeDelFromDom = index => {
+    const copyArray = Object.assign([], this.state.userReviewArr);
+    copyArray.splice(index, 1);
+    this.setState({
+      userReviewArr: copyArray,
+    });
+  };
+
   handleDelete = reviews_id => {
     let deleteArray = [];
     this.state.savedReviewId.filter(item => {
@@ -82,6 +92,9 @@ class Reviews extends Component {
         }
         return res;
       })
+      .then(data => {
+        this.removeDelFromDom();
+      })
       .catch(err => {
         this.setState({
           error: err.message,
@@ -89,25 +102,37 @@ class Reviews extends Component {
       });
   };
 
+  removeDelFromDom(index) {
+    const copyArray = Object.assign([], this.state.userReviewArr);
+    copyArray.splice(index, 1);
+    this.setState({
+      userReviewArr: copyArray,
+    });
+  }
+
   render() {
     const mapUserReviews = this.state.userReviewArr;
     const flattened = [].concat.apply([], mapUserReviews);
     const displaySavedReviews = flattened.map(item => {
       return (
-        <div>
-          <ul>
+        <div key={uuid()}>
+          <ul key={uuid()}>
             <li key={uuid()}>{item.movie_title}</li>
+
             <li key={uuid()}>
               <span>Genre:</span> {item.genre}
             </li>
+
             <li key={uuid()}>
-              <span>Author:</span> {item.review_author}
+              <span key={uuid()}>Author:</span> {item.review_author}
             </li>
+
             <li key={uuid()}>
-              <span>URL:</span> {item.review_url}
+              <span key={uuid()}>URL:</span> {item.review_url}
             </li>
+
             <li key={uuid()}>
-              <span>Blurb:</span> {item.review_text}
+              <span key={uuid()}>Blurb:</span> {item.review_text}
             </li>
           </ul>
           <button onClick={() => this.handleDelete(item.reviews_id)}>

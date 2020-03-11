@@ -35,7 +35,7 @@ class Search extends Component {
       .then(data => {
         this.setState({
           users_id: data.users_id,
-        })
+        });
       })
       .catch(err => {
         this.setState({
@@ -126,7 +126,6 @@ class Search extends Component {
   };
 
   render() {
-    console.log(this.state.reviewArr);
     const serverErrorMessage = this.state.error ? (
       <div className='create-error'>Don't Have that one yet, sorry.</div>
     ) : (
@@ -139,22 +138,20 @@ class Search extends Component {
           <ul>
             <li key={uuid()}>{item.movie_title}</li>
             <li key={uuid()}>
-              <span>Genre:</span> {item.genre}
+              <span key={uuid()}>Genre:</span> {item.genre}
             </li>
             <li key={uuid()}>
-              <span>Author:</span> {item.review_author}
+              <span key={uuid()}>Author:</span> {item.review_author}
             </li>
             <li key={uuid()}>
-              <span>URL:</span> {item.review_url}
+              <span key={uuid()}>URL:</span> {item.review_url}
             </li>
             <li key={uuid()}>
-              <span>Blurb:</span> {item.review_text}
+              <span key={uuid()}>Blurb:</span> {item.review_text}
             </li>
-            <li>
-              <button onClick={() => this.handleSaveReview(item.reviews_id)}>
-                Save Trigger
-              </button>
-            </li>
+            <button onClick={() => this.handleSaveReview(item.reviews_id)}>
+              Save Trigger
+            </button>
           </ul>
         </div>
       );
