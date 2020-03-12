@@ -174,8 +174,8 @@ class Reviews extends Component {
         <Link to={"/search"}>
           <button>Back To Search</button>
         </Link>
-        <Link to={"/"}></Link>
-        <button onClick={() => this.handleLogOut()}>Logout</button>
+        <Link to={"/"}><button onClick={() => this.handleLogOut()}>Logout</button></Link>
+        
       </div>
     );
   }

@@ -143,7 +143,9 @@ class Search extends Component {
         return res;
       })
       .then(res => res.json())
-      
+      .then(data => {
+        alert("Username Changed");
+      })
       .catch(err => {
         this.setState({
           error: err.message,
@@ -161,6 +163,10 @@ class Search extends Component {
 
   resetForm = () => {
     this.myFormRef.reset();
+  };
+
+  handleLogOut = () => {
+    localStorage.clear();
   };
 
   render() {
@@ -202,7 +208,7 @@ class Search extends Component {
           <h2>
             Welcome <span>{this.state.username}</span>
           </h2>
-          <p>User name make you gag?</p>
+          <p>Username make you gag?</p>
           <form onSubmit={event => this.handleUserNameChange(event)}>
             <input
               type='text'
@@ -211,6 +217,17 @@ class Search extends Component {
             />
           </form>
         </header>
+        <section>
+          <Link
+            to={{
+              pathname: "/savedreviews",
+              state: {users_id: this.state.users_id},
+            }}
+          >
+            <button>Go To Saved List</button>
+          </Link>
+          <Link to={"/"}><button onClick={() => this.handleLogOut()}>Logout</button></Link>
+        </section>
         <form
           ref={el => (this.myFormRef = el)}
           onSubmit={event => this.handleSearch(event)}
@@ -228,17 +245,6 @@ class Search extends Component {
         </form>
 
         <div key={uuid()}>{displaySearchReviews}</div>
-
-        <section>
-          <Link
-            to={{
-              pathname: "/savedreviews",
-              state: {users_id: this.state.users_id},
-            }}
-          >
-            <button>Go To Saved List</button>
-          </Link>
-        </section>
       </div>
     );
   }
