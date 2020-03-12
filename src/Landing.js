@@ -16,6 +16,10 @@ class Landing extends Component {
     this.handleSignUp = this.handleSignUp.bind(this);
   }
 
+  componentDidMount(){
+    localStorage.clear();
+  }
+
   updateUsername(username) {
     this.setState({username: username});
   }

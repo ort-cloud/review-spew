@@ -10,8 +10,10 @@ class Search extends Component {
       movieTitle: "",
       reviewArr: [],
       users_id: "",
+      username: "",
     };
     this.handleMovieTitle = this.handleMovieTitle.bind(this);
+    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -35,6 +37,7 @@ class Search extends Component {
       .then(data => {
         this.setState({
           users_id: data.users_id,
+          username: getUser,
         });
       })
       .catch(err => {
@@ -111,9 +114,44 @@ class Search extends Component {
       });
   };
 
+  handleChange(event) {
+    this.setState({username: event.target.value});
+  }
+
   handleMovieTitle(event) {
     this.setState({movieTitle: event.target.value});
   }
+
+  handleUserNameChange = event => {
+    event.preventDefault();
+    const url = `http://localhost:8000/api/users/${this.state.users_id}`;
+    const options = {
+      method: "PATCH",
+      body: JSON.stringify({
+        users_id: this.state.users_id,
+        username: this.state.username,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    };
+    fetch(url, options)
+      .then(res => {
+        if (!res.ok) {
+          throw new Error("something went wrong");
+        }
+        return res;
+      })
+      .then(res => res.json())
+      
+      .catch(err => {
+        this.setState({
+          error: err.message,
+        });
+      });
+
+    localStorage.setItem("username", this.state.username);
+  };
 
   capString(str) {
     return str.replace(/\w\S*/g, function(txt) {
@@ -126,11 +164,6 @@ class Search extends Component {
   };
 
   render() {
-    const serverErrorMessage = this.state.error ? (
-      <div className='create-error'>Don't Have that one yet, sorry.</div>
-    ) : (
-      ""
-    );
     const mapReviewRes = this.state.reviewArr;
     const displaySearchReviews = mapReviewRes.map(item => {
       return (
@@ -149,7 +182,10 @@ class Search extends Component {
             <li key={uuid()}>
               <span key={uuid()}>Blurb:</span> {item.review_text}
             </li>
-            <button onClick={() => this.handleSaveReview(item.reviews_id)}>
+            <button
+              key={uuid()}
+              onClick={() => this.handleSaveReview(item.reviews_id)}
+            >
               Save Trigger
             </button>
           </ul>
@@ -165,9 +201,18 @@ class Search extends Component {
           <Link to={"/"}>
             <h1>Search Page</h1>
           </Link>
-          <h2>The searchiest of search pages</h2>
+          <h2>
+            Welcome <span>{this.state.username}</span>
+          </h2>
+          <p>User name make you gag?</p>
+          <form onSubmit={event => this.handleUserNameChange(event)}>
+            <input
+              type='text'
+              /* value={this.state.username} */
+              onChange={this.handleChange}
+            />
+          </form>
         </header>
-        {serverErrorMessage}
         <form
           ref={el => (this.myFormRef = el)}
           onSubmit={event => this.handleSearch(event)}
