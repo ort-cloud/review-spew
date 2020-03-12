@@ -13,6 +13,7 @@ class Reviews extends Component {
     };
   }
 
+  //! ERROR: WHEN NO SAVED REVIEWS
   componentDidMount() {
     const url = `http://localhost:8000/api/reviews/savedReview/user/${this.props.location.state.users_id}`;
     const options = {
@@ -62,7 +63,6 @@ class Reviews extends Component {
       });
   }
 
-
   removeDelFromDom = index => {
     const copyArray = Object.assign([], this.state.userReviewArr);
     copyArray.splice(index, 1);
@@ -101,14 +101,6 @@ class Reviews extends Component {
         });
       });
   };
-
-  removeDelFromDom(index) {
-    const copyArray = Object.assign([], this.state.userReviewArr);
-    copyArray.splice(index, 1);
-    this.setState({
-      userReviewArr: copyArray,
-    });
-  }
 
   render() {
     const mapUserReviews = this.state.userReviewArr;
