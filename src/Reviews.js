@@ -10,12 +10,12 @@ class Reviews extends Component {
     this.state = {
       userReviewArr: [],
       savedReviewId: [],
+      userHasNoSavedReviews: null,
     };
   }
 
-  //! ERROR: WHEN NO SAVED REVIEWS
   componentDidMount() {
-    const url = `http://localhost:8000/api/reviews/savedReview/user/${this.props.location.state.users_id}`;
+    const url = `http://localhost:8000/api/reviews/savedReview/check/${this.props.location.state.users_id}`;
     const options = {
       method: "GET",
       headers: {
@@ -24,42 +24,58 @@ class Reviews extends Component {
     };
     fetch(url, options)
       .then(res => {
-        if (!res.ok) {
-          throw new Error("Oh, no. Error!");
-        }
         return res;
       })
       .then(res => res.json())
       .then(data => {
-        let idArray = [];
-        let savedIdArray = [...data];
-        data.filter(item => {
-          return idArray.push(item.reviews_id);
-        });
-        this.setState({
-          savedReviewId: savedIdArray,
-        });
-        const promises = idArray.map(item => {
-          return fetch(`http://localhost:8000/api/reviews/${item}`, options)
-            .then(res => {
-              if (!res.ok) {
-                throw new Error("Oh, no. Error!");
-              }
-              return res;
-            })
-            .then(res => {
-              return res.json();
-            });
-        });
-        Promise.all(promises).then(data => {
-          let arrayArray = [];
-          data.map(item => {
-            return arrayArray.push(item);
-          });
+        if (data === false) {
           this.setState({
-            userReviewArr: arrayArray,
+            userHasNoSavedReviews: true,
           });
-        });
+          return null;
+        }
+        return fetch(
+          `http://localhost:8000/api/reviews/savedReview/user/${this.props.location.state.users_id}`,
+          options
+        )
+          .then(res => {
+            if (!res.ok) {
+              throw new Error("Oh, no. Error!");
+            }
+            return res;
+          })
+          .then(res => res.json())
+          .then(data => {
+            let idArray = [];
+            let savedIdArray = [...data];
+            data.filter(item => {
+              return idArray.push(item.reviews_id);
+            });
+            this.setState({
+              savedReviewId: savedIdArray,
+            });
+            const promises = idArray.map(item => {
+              return fetch(`http://localhost:8000/api/reviews/${item}`, options)
+                .then(res => {
+                  if (!res.ok) {
+                    throw new Error("Oh, no. Error!");
+                  }
+                  return res;
+                })
+                .then(res => {
+                  return res.json();
+                });
+            });
+            Promise.all(promises).then(data => {
+              let arrayArray = [];
+              data.map(item => {
+                return arrayArray.push(item);
+              });
+              this.setState({
+                userReviewArr: arrayArray,
+              });
+            });
+          });
       });
   }
 
@@ -102,7 +118,16 @@ class Reviews extends Component {
       });
   };
 
+  handleLogOut = () => {
+    localStorage.clear();
+  };
+
   render() {
+    const noReviews = this.state.userHasNoSavedReviews ? (
+      <div>You haven't saved any reviews yet.</div>
+    ) : (
+      ""
+    );
     const mapUserReviews = this.state.userReviewArr;
     const flattened = [].concat.apply([], mapUserReviews);
     const displaySavedReviews = flattened.map(item => {
@@ -143,11 +168,14 @@ class Reviews extends Component {
             <h1>Reviews</h1>
           </Link>
           <h2>The searchiest of search pages</h2>
+          {noReviews}
         </header>
-        <div>{displaySavedReviews}</div>
+        <div key={uuid()}>{displaySavedReviews}</div>
         <Link to={"/search"}>
           <button>Back To Search</button>
         </Link>
+        <Link to={"/"}></Link>
+        <button onClick={() => this.handleLogOut()}>Logout</button>
       </div>
     );
   }
