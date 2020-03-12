@@ -26,3 +26,7 @@ nav {
 header {
   padding: 45px 15px;
 }
+
+li {
+  list-style: none;
+}
