@@ -16,10 +16,6 @@ class Landing extends Component {
     this.handleSignUp = this.handleSignUp.bind(this);
   }
 
-/*   componentDidMount(){
-    localStorage.clear();
-  } */
-
   updateUsername(username) {
     this.setState({username: username});
   }
@@ -71,7 +67,7 @@ class Landing extends Component {
           error: err.message,
         });
       });
-  };
+  }
 
   handleBasicAuthReg(event) {
     event.preventDefault();
@@ -133,7 +129,6 @@ class Landing extends Component {
   };
 
   render() {
-
     const loginOrSignup = this.state.clickedLogin
       ? event => this.handleBasicAuthLogin(event)
       : null || this.state.clickedSignUp

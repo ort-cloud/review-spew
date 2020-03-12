@@ -55,7 +55,10 @@ class Reviews extends Component {
               savedReviewId: savedIdArray,
             });
             const promises = idArray.map(item => {
-              return fetch(`https://ancient-savannah-08160.herokuapp.com/api/reviews/${item}`, options)
+              return fetch(
+                `https://ancient-savannah-08160.herokuapp.com/api/reviews/${item}`,
+                options
+              )
                 .then(res => {
                   if (!res.ok) {
                     throw new Error("Oh, no. Error!");
@@ -158,7 +161,7 @@ class Reviews extends Component {
     return (
       <div>
         <header>
-            <h1>Reviews</h1>
+          <h1>Reviews</h1>
           <h2>The searchiest of search pages</h2>
           {noReviews}
         </header>
@@ -166,7 +169,6 @@ class Reviews extends Component {
         <Link to={"/search"}>
           <button>Back To Search</button>
         </Link>
-        
       </div>
     );
   }

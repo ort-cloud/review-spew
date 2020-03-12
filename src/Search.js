@@ -13,7 +13,6 @@ class Search extends Component {
       username: "",
     };
     this.handleMovieTitle = this.handleMovieTitle.bind(this);
-    this.handleChange = this.handleChange.bind(this);
   }
 
   componentDidMount() {
@@ -105,7 +104,7 @@ class Search extends Component {
         if (data.error) {
           throw new Error("Somethng went wrong 2");
         }
-        this.removeSavedFromDom()
+        this.removeSavedFromDom();
         alert("Saved");
       })
       .catch(err => {
@@ -115,43 +114,9 @@ class Search extends Component {
       });
   };
 
-  handleChange(event) {
-    this.setState({username: event.target.value});
-  }
-
   handleMovieTitle(event) {
     this.setState({movieTitle: event.target.value});
   }
-
-  handleUserNameChange = event => {
-    event.preventDefault();
-    const url = `https://ancient-savannah-08160.herokuapp.com/api/users/${this.state.users_id}`;
-    const options = {
-      method: "PATCH",
-      body: JSON.stringify({
-        users_id: this.state.users_id,
-        username: this.state.username,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
-    };
-    fetch(url, options)
-      .then(res => {
-        if (!res.ok) {
-          throw new Error("something went wrong");
-        }
-        return res;
-      })
-      .then(res => res.json())
-      .catch(err => {
-        this.setState({
-          error: err.message,
-        });
-      });
-    alert("Username Changed");
-    localStorage.setItem("username", this.state.username);
-  };
 
   capString(str) {
     return str.replace(/\w\S*/g, function(txt) {
@@ -214,14 +179,6 @@ class Search extends Component {
           <h2>
             Welcome <span>{this.state.username}</span>
           </h2>
-          <p>Username make you gag?</p>
-          <form onSubmit={event => this.handleUserNameChange(event)}>
-            <input
-              type='text'
-              /* value={this.state.username} */
-              onChange={this.handleChange}
-            />
-          </form>
         </header>
         <section>
           <Link
