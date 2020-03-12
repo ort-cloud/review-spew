@@ -167,8 +167,8 @@ class Search extends Component {
     const mapReviewRes = this.state.reviewArr;
     const displaySearchReviews = mapReviewRes.map(item => {
       return (
-        <div>
-          <ul>
+        <div key={uuid()}>
+          <ul key={uuid()}>
             <li key={uuid()}>{item.movie_title}</li>
             <li key={uuid()}>
               <span key={uuid()}>Genre:</span> {item.genre}
@@ -227,7 +227,7 @@ class Search extends Component {
           <button type='submit'>Search...</button>
         </form>
 
-        <div>{displaySearchReviews}</div>
+        <div key={uuid()}>{displaySearchReviews}</div>
 
         <section>
           <Link
