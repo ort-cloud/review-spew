@@ -105,6 +105,7 @@ class Search extends Component {
         if (data.error) {
           throw new Error("Somethng went wrong 2");
         }
+        this.removeSavedFromDom()
         alert("Saved");
       })
       .catch(err => {
@@ -143,15 +144,12 @@ class Search extends Component {
         return res;
       })
       .then(res => res.json())
-      .then(data => {
-        alert("Username Changed");
-      })
       .catch(err => {
         this.setState({
           error: err.message,
         });
       });
-
+    alert("Username Changed");
     localStorage.setItem("username", this.state.username);
   };
 
@@ -167,6 +165,14 @@ class Search extends Component {
 
   handleLogOut = () => {
     localStorage.clear();
+  };
+
+  removeSavedFromDom = index => {
+    const copyArray = Object.assign([], this.state.reviewArr);
+    copyArray.splice(index, 1);
+    this.setState({
+      reviewArr: copyArray,
+    });
   };
 
   render() {
@@ -192,7 +198,7 @@ class Search extends Component {
               key={uuid()}
               onClick={() => this.handleSaveReview(item.reviews_id)}
             >
-              Save Trigger
+              Save
             </button>
           </ul>
         </div>
@@ -226,7 +232,9 @@ class Search extends Component {
           >
             <button>Go To Saved List</button>
           </Link>
-          <Link to={"/"}><button onClick={() => this.handleLogOut()}>Logout</button></Link>
+          <Link to={"/"}>
+            <button onClick={() => this.handleLogOut()}>Logout</button>
+          </Link>
         </section>
         <form
           ref={el => (this.myFormRef = el)}

@@ -118,10 +118,6 @@ class Reviews extends Component {
       });
   };
 
-  handleLogOut = () => {
-    localStorage.clear();
-  };
-
   render() {
     const noReviews = this.state.userHasNoSavedReviews ? (
       <div>You haven't saved any reviews yet.</div>
@@ -162,11 +158,7 @@ class Reviews extends Component {
     return (
       <div>
         <header>
-          <p>[placeholder for logo]</p>
-          <p>[logo will also be button returning to the landing page]</p>
-          <Link to={"/"}>
             <h1>Reviews</h1>
-          </Link>
           <h2>The searchiest of search pages</h2>
           {noReviews}
         </header>
@@ -174,7 +166,6 @@ class Reviews extends Component {
         <Link to={"/search"}>
           <button>Back To Search</button>
         </Link>
-        <Link to={"/"}><button onClick={() => this.handleLogOut()}>Logout</button></Link>
         
       </div>
     );

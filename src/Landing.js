@@ -16,9 +16,9 @@ class Landing extends Component {
     this.handleSignUp = this.handleSignUp.bind(this);
   }
 
-  componentDidMount(){
+/*   componentDidMount(){
     localStorage.clear();
-  }
+  } */
 
   updateUsername(username) {
     this.setState({username: username});
@@ -133,6 +133,7 @@ class Landing extends Component {
   };
 
   render() {
+
     const loginOrSignup = this.state.clickedLogin
       ? event => this.handleBasicAuthLogin(event)
       : null || this.state.clickedSignUp
@@ -164,6 +165,12 @@ class Landing extends Component {
           </section>
 
           <section>
+            <h3>Demo Login</h3>
+            <p>Username: demo</p>
+            <p>Password: demopass</p>
+          </section>
+
+          <section>
             <form className='form' onSubmit={loginOrSignup}>
               <div>
                 <label>Username</label>
@@ -187,8 +194,6 @@ class Landing extends Component {
               <button type='submit' onClick={this.handleSignUp}>
                 Sigh up
               </button>
-
-              <button onClick={() => this.handleLogOut()}>Logout</button>
             </form>
           </section>
         </main>
