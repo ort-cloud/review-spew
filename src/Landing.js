@@ -32,7 +32,7 @@ class Landing extends Component {
     event.preventDefault();
     const {history} = this.props;
     const {username, password} = this.state;
-    const url = "http://localhost:8000/api/users/login";
+    const url = "https://ancient-savannah-08160.herokuapp.com//api/users/login";
     const options = {
       method: "POST",
       body: JSON.stringify({
@@ -78,7 +78,7 @@ class Landing extends Component {
     const {history} = this.props;
     const {username, password} = this.state;
     const newUser = {username, password};
-    const url = "http://localhost:8000/api/users";
+    const url = "https://ancient-savannah-08160.herokuapp.com//api/users";
     const options = {
       method: "POST",
       body: JSON.stringify(newUser),
