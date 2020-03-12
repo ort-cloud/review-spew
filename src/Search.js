@@ -196,8 +196,6 @@ class Search extends Component {
     return (
       <div>
         <header>
-          <p>[placeholder for logo]</p>
-          <p>[logo will also be button returning to the landing page]</p>
           <Link to={"/"}>
             <h1>Search Page</h1>
           </Link>
