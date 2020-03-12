@@ -173,9 +173,7 @@ class Search extends Component {
     return (
       <div>
         <header>
-          <Link to={"/"}>
             <h1>Search Page</h1>
-          </Link>
           <h2>
             Welcome <span>{this.state.username}</span>
           </h2>
