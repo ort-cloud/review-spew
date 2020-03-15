@@ -15,7 +15,8 @@ class Reviews extends Component {
   }
 
   componentDidMount() {
-    const url = `http://localhost:8000/api/reviews/savedReview/check/${this.props.location.state.users_id}`;
+    const loadData = this.props.location.state.users_id
+    const url = `http://localhost:8000/api/reviews/savedReview/check/${loadData}`;
     const options = {
       method: "GET",
       headers: {

@@ -39,11 +39,6 @@ class Search extends Component {
           username: getUser,
         });
       })
-      .catch(err => {
-        this.setState({
-          error: err.message,
-        });
-      });
   }
 
   handleSearch(event) {
