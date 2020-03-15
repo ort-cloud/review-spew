@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Link} from "react-router-dom";
+import {Link, withRouter} from "react-router-dom";
 import uuid from "uuid";
 
 import "./App.css";
@@ -174,4 +174,4 @@ class Reviews extends Component {
     );
   }
 }
-export default Reviews;
+export default withRouter(Reviews);
