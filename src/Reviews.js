@@ -15,7 +15,7 @@ class Reviews extends Component {
   }
 
   componentDidMount() {
-    const url = `https://ancient-savannah-08160.herokuapp.com/api/reviews/savedReview/check/${this.props.location.state.users_id}`;
+    const url = `http://localhost:8000/api/reviews/savedReview/check/${this.props.location.state.users_id}`;
     const options = {
       method: "GET",
       headers: {
@@ -35,7 +35,7 @@ class Reviews extends Component {
           return null;
         }
         return fetch(
-          `https://ancient-savannah-08160.herokuapp.com/api/reviews/savedReview/user/${this.props.location.state.users_id}`,
+          `http://localhost:8000/api/reviews/savedReview/user/${this.props.location.state.users_id}`,
           options
         )
           .then(res => {
@@ -56,7 +56,7 @@ class Reviews extends Component {
             });
             const promises = idArray.map(item => {
               return fetch(
-                `https://ancient-savannah-08160.herokuapp.com/api/reviews/${item}`,
+                `http://localhost:8000/api/reviews/${item}`,
                 options
               )
                 .then(res => {
@@ -96,7 +96,7 @@ class Reviews extends Component {
       return item.reviews_id === reviews_id ? deleteArray.push(item.id) : null;
     });
 
-    const url = `https://ancient-savannah-08160.herokuapp.com/api/reviews/savedReview/${deleteArray}`;
+    const url = `http://localhost:8000/api/reviews/savedReview/${deleteArray}`;
     const options = {
       method: "DELETE",
       headers: {
