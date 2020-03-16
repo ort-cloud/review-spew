@@ -140,7 +140,7 @@ class Landing extends Component {
         <main>
           <header>
             <h1>Review Spew</h1>
-            <p>
+            <p className="about">
               Stuck trying to figure out what to watch? Maybe you’re a movie
               nerd and you’re not sure if the dubbed German toture-horror, or
               the sci fi/thriller/space noir is right for your blog? Maybe it’s

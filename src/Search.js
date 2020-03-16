@@ -169,7 +169,7 @@ class Search extends Component {
       <div>
         <header>
             <h1>Search</h1>
-          <h2>
+          <h2 className='welcome'>
             Welcome <span>{this.state.username}</span>
           </h2>
         </header>
