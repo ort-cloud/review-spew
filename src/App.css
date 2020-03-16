@@ -161,6 +161,19 @@ a:hover, a:active, a:visited {
 }
 
 @media only screen and (min-width: 480px) {
+  p{
+    font-size: 3vw;
+  }
+
+  .splatter {
+    margin-top: 10%;
+  }
+
+  .display-reviews {
+    font-size: 16px;
+    padding-left: 10%;
+    padding-right: 10%;
+  }
 }
 
 @media only screen and (min-width: 1024px) {
