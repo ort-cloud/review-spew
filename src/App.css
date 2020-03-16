@@ -1,5 +1,34 @@
+@import url("https://fonts.googleapis.com/css?family=Monoton|Roboto&display=swap");
+
+/* ffont-family: 'Monoton', cursive;
+font-family: 'Roboto', sans-serif; */
+
 * {
   box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+html {
+  background-color: #56b880;
+  color: rgb(33, 43, 54);
+  font-family: "Roboto", sans-serif;
+  margin-left: 5%;
+  margin-right: 5%;
+  margin-bottom: 15%;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: "Monoton", cursive;
+  font-weight: 400;
+}
+
+h1 {
+  margin-bottom: 13%;
 }
 
 body {
@@ -9,24 +38,194 @@ body {
   line-height: 1.5;
 }
 
-nav,
-footer {
-  padding: 1% 0;
-  background-color: #aaa;
-}
-
-nav {
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
+p {
+  font-size: 12px;
 }
 
 header {
-  padding: 45px 15px;
+  padding-top: 7%;
 }
 
 li {
   list-style: none;
+}
+
+label {
+  font-weight: bold;
+}
+
+button {
+  margin: 1%;
+  padding: 1%;
+  -moz-box-shadow: inset 0px 1px 0px 0px #ffffff;
+  -webkit-box-shadow: inset 0px 1px 0px 0px #ffffff;
+  box-shadow: inset 0px 1px 0px 0px #ffffff;
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0.05, #f9f9f9),
+    color-stop(1, #e9e9e9)
+  );
+  background: -moz-linear-gradient(center top, #f9f9f9 5%, #e9e9e9 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#f9f9f9', endColorstr='#e9e9e9');
+  background-color: #f9f9f9;
+  -webkit-border-top-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-bottom-left-radius: 5px;
+  text-indent: 0;
+  display: inline-block;
+  color: #666666;
+  font-weight: bold;
+  font-style: normal;
+  height: max-content;
+  width: max-content;
+  text-decoration: none;
+  text-align: center;
+  text-shadow: 0px 1px 0px #ffffff;
+}
+button:hover {
+  background: -webkit-gradient(
+    linear,
+    left top,
+    left bottom,
+    color-stop(0.05, #e9e9e9),
+    color-stop(1, #f9f9f9)
+  );
+  background: -moz-linear-gradient(center top, #e9e9e9 5%, #f9f9f9 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#e9e9e9', endColorstr='#f9f9f9');
+  background-color: #e9e9e9;
+}
+button:active {
+  position: relative;
+  top: 1px;
+}
+
+input{
+  margin: 1.25%;
+  padding: 1%;
+  -webkit-border-top-left-radius: 5px;
+  -moz-border-radius-topleft: 5px;
+  border-top-left-radius: 5px;
+  -webkit-border-top-right-radius: 5px;
+  -moz-border-radius-topright: 5px;
+  border-top-right-radius: 5px;
+  -webkit-border-bottom-right-radius: 5px;
+  -moz-border-radius-bottomright: 5px;
+  border-bottom-right-radius: 5px;
+  -webkit-border-bottom-left-radius: 5px;
+  -moz-border-radius-bottomleft: 5px;
+  border-bottom-left-radius: 5px;
+}
+
+.splatter {
+  margin-top: 15%;
+  margin-bottom: 5%;
+}
+
+a {
+  color: inherit;
+}
+
+a:hover, a:active, a:visited {
+  color: whitesmoke;
+}
+
+.search-form{
+  margin-top: 15%;
+}
+
+.display-reviews {
+  display: flex;
+  flex-direction: column;
+  margin: 10%;
+  font-size: 4vw;
+}
+
+.movie_title {
+  margin-bottom: 1.5%;
+}
+
+.splatter-section{
+  margin-top: 10%;
+  margin-bottom: 3%;
+}
+
+@media only screen and (min-width: 480px) {
+  p{
+    font-size: 3vw;
+  }
+
+  .splatter {
+    margin-top: 10%;
+  }
+
+  .display-reviews {
+    font-size: 16px;
+    padding-left: 10%;
+    padding-right: 10%;
+  }
+}
+
+@media only screen and (min-width: 1024px) {
+  p {
+    font-size: 16px;
+    line-height: 1.75;
+  }
+
+  h1 {
+    font-size:7vw;
+    margin-bottom: 5%;
+  }
+
+  .about {
+    text-align: center;
+    margin-left: 10%;
+    margin-right: 10%;
+    
+  }
+
+  .splatter {
+    font-size: 4.5vw;
+    margin-top: 5%;
+    margin-bottom: 1%;
+  }
+
+  .splatter-section > h2 {
+    font-size: 4vw;
+  }
+
+  .splatter-section > h3 {
+    font-size: 3vw;
+  }
+
+  .landing-label {
+    font-size: 2vw;
+  }
+
+  .search-form {
+    margin-top: 5%;
+  }
+
+  .welcome {
+    font-size: 3vw;
+  }
+
+  .display-reviews > label {
+    font-size: 1vw;
+  }
+
+  .movie_title {
+    font-size: 2.75vw;
+  }
+
 }

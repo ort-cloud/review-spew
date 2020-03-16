@@ -28,7 +28,7 @@ class Landing extends Component {
     event.preventDefault();
     const {history} = this.props;
     const {username, password} = this.state;
-    const url = "https://ancient-savannah-08160.herokuapp.com/api/users/login";
+    const url = "http://localhost:8000/api/users/login";
     const options = {
       method: "POST",
       body: JSON.stringify({
@@ -74,7 +74,7 @@ class Landing extends Component {
     const {history} = this.props;
     const {username, password} = this.state;
     const newUser = {username, password};
-    const url = "https://ancient-savannah-08160.herokuapp.com/api/users";
+    const url = "http://localhost:8000/api/users";
     const options = {
       method: "POST",
       body: JSON.stringify(newUser),
@@ -140,43 +140,65 @@ class Landing extends Component {
         <main>
           <header>
             <h1>Review Spew</h1>
-            <p>
+            <p className="about">
               Stuck trying to figure out what to watch? Maybe you’re a movie
               nerd and you’re not sure if the dubbed German toture-horror, or
               the sci fi/thriller/space noir is right for your blog? Maybe it’s
               late, you just got that text to chill, and now you have to choose
               between the ultra-violent anime you were going to watch or
               literally anything else? This is where Review Spew comes in to
-              hold your hair back for you. Enter the name of the movie in question and Review Spew will regurgitate reviews from the
-              top review sites from all across the web. A fair and honest
-              upchuck of all the pretentious opinions your cinephilic heart
-              desires smeared across your screen.
+              hold your hair back for you. Enter the name of the movie in
+              question and Review Spew will regurgitate reviews from the top
+              review sites from all across the web. A fair and honest upchuck of
+              all the pretentious opinions your cinephilic heart desires smeared
+              across your screen.
             </p>
 
-            <h2>Splatter Warning</h2>
+            <h2 className='splatter'>Splatter Warning</h2>
 
-            <p>This app, at the present time, is just a demonstration. So we have chosen to limit our list of films.</p>
-            <p>Don't let this get you sick with worry. You still have 100 to chose from!</p>
-            <p>Our list is provided by The American Film Institute's "100 Years...100 Movies List".</p>
-            <p>You can find their complete list <a target="_blank" rel="noopener noreferrer" href="https://www.afi.com/afis-100-years-100-movies-10th-anniversary-edition/">here</a>. They even have a downloadable pdf checklist!</p>
-
-          
+            <p>
+              This app, at the present time, is just a demonstration. So we have
+              chosen to limit our list of films.
+            </p>
+            <p>
+              Don't let this get you sick with worry. You still have 100 to
+              chose from!
+            </p>
+            <p>
+              Our list is provided by The American Film Institute's "100
+              Years...100 Movies List".
+            </p>
+            <p>
+              You can find their complete list{" "}
+              <a
+                target='_blank'
+                rel='noopener noreferrer'
+                href='https://www.afi.com/afis-100-years-100-movies-10th-anniversary-edition/'
+              >
+                here
+              </a>
+              . They even have a downloadable pdf checklist!
+            </p>
           </header>
 
-          <section>
+          <section className="splatter-section" >
             <h2>Check it out!</h2>
-          </section>
 
-          <section>
             <h3>Demo Login</h3>
-            <p>Username: demo</p>
-            <p>Password: demopass</p>
+            <p>
+              {" "}
+              <b>Username:</b> demo
+            </p>
+            <p>
+              {" "}
+              <b>Password:</b> demopass
+            </p>
           </section>
 
           <section>
             <form className='form' onSubmit={loginOrSignup}>
               <div>
-                <label>Username</label>
+                <label className="landing-label">Username</label>
                 <input
                   required
                   type='text'
@@ -184,7 +206,7 @@ class Landing extends Component {
                 />
               </div>
               <div>
-                <label>Password</label>
+                <label className="landing-label">Password</label>
                 <input
                   required
                   type='password'
