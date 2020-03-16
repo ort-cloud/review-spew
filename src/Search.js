@@ -17,7 +17,7 @@ class Search extends Component {
 
   componentDidMount() {
     const getUser = localStorage.getItem("username");
-    const url = `http://localhost:8000/api/users/username/${getUser}`;
+    const url = `https://ancient-savannah-08160.herokuapp.com/api/users/username/${getUser}`;
     const options = {
       method: "GET",
       headers: {
@@ -43,7 +43,7 @@ class Search extends Component {
 
   handleSearch(event) {
     event.preventDefault();
-    const url = `http://localhost:8000/api/search/${this.state.movieTitle}`;
+    const url = `https://ancient-savannah-08160.herokuapp.com/api/search/${this.state.movieTitle}`;
     const options = {
       method: "GET",
       headers: {
@@ -76,7 +76,7 @@ class Search extends Component {
     this.state.reviewArr.filter(item => {
       return item.reviews_id;
     });
-    const url = `http://localhost:8000/api/reviews/savedReview`;
+    const url = `https://ancient-savannah-08160.herokuapp.com/api/reviews/savedReview`;
     const options = {
       method: "POST",
       body: JSON.stringify({
