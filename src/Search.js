@@ -139,20 +139,20 @@ class Search extends Component {
     const mapReviewRes = this.state.reviewArr;
     const displaySearchReviews = mapReviewRes.map(item => {
       return (
-        <div key={uuid()}>
+        <div className="display-reviews" key={uuid()}>
           <ul key={uuid()}>
-            <li key={uuid()}>{item.movie_title}</li>
+            <h4 className='movie_title' key={uuid()}>{item.movie_title}</h4>
             <li key={uuid()}>
-              <span key={uuid()}>Genre:</span> {item.genre}
+              <label key={uuid()}>Genre:</label> {item.genre}
             </li>
             <li key={uuid()}>
-              <span key={uuid()}>Author:</span> {item.review_author}
+              <label key={uuid()}>Author:</label> {item.review_author}
             </li>
             <li key={uuid()}>
-              <span key={uuid()}>URL:</span> {item.review_url}
+              <label key={uuid()}>URL:</label> {item.review_url}
             </li>
             <li key={uuid()}>
-              <span key={uuid()}>Blurb:</span> {item.review_text}
+              <label key={uuid()}>Review:</label> {item.review_text}
             </li>
             <button
               key={uuid()}
@@ -187,10 +187,11 @@ class Search extends Component {
           </Link>
         </section>
         <form
+          className='search-form'
           ref={el => (this.myFormRef = el)}
           onSubmit={event => this.handleSearch(event)}
         >
-          <h3>Enter movie title in the box below. Spew results.</h3>
+          <h3>Enter a movie title in the box below. Spew results.</h3>
           <input
             type='text'
             name='search-box'
@@ -202,7 +203,7 @@ class Search extends Component {
           <button type='submit'>Search...</button>
         </form>
 
-        <div key={uuid()}>{displaySearchReviews}</div>
+        <div key={uuid()} >{displaySearchReviews}</div>
       </div>
     );
   }

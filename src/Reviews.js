@@ -15,7 +15,7 @@ class Reviews extends Component {
   }
 
   componentDidMount() {
-    const loadData = this.props.location.state.users_id
+    const loadData = this.props.location.state.users_id;
     const url = `http://localhost:8000/api/reviews/savedReview/check/${loadData}`;
     const options = {
       method: "GET",
@@ -56,10 +56,7 @@ class Reviews extends Component {
               savedReviewId: savedIdArray,
             });
             const promises = idArray.map(item => {
-              return fetch(
-                `http://localhost:8000/api/reviews/${item}`,
-                options
-              )
+              return fetch(`http://localhost:8000/api/reviews/${item}`, options)
                 .then(res => {
                   if (!res.ok) {
                     throw new Error("Oh, no. Error!");
@@ -124,7 +121,7 @@ class Reviews extends Component {
 
   render() {
     const noReviews = this.state.userHasNoSavedReviews ? (
-      <div>You haven't saved any reviews yet.</div>
+      <div><h2>You haven't saved any reviews yet.</h2></div>
     ) : (
       ""
     );
@@ -132,29 +129,31 @@ class Reviews extends Component {
     const flattened = [].concat.apply([], mapUserReviews);
     const displaySavedReviews = flattened.map(item => {
       return (
-        <div key={uuid()}>
+        <div className='display-reviews' key={uuid()}>
           <ul key={uuid()}>
-            <li key={uuid()}>{item.movie_title}</li>
+            <h4 className='movie_title' key={uuid()}>
+              {item.movie_title}
+            </h4>
 
             <li key={uuid()}>
-              <span>Genre:</span> {item.genre}
+              <label>Genre:</label> {item.genre}
             </li>
 
             <li key={uuid()}>
-              <span key={uuid()}>Author:</span> {item.review_author}
+              <label key={uuid()}>Author:</label> {item.review_author}
             </li>
 
             <li key={uuid()}>
-              <span key={uuid()}>URL:</span> {item.review_url}
+              <label key={uuid()}>URL:</label> {item.review_url}
             </li>
 
             <li key={uuid()}>
-              <span key={uuid()}>Blurb:</span> {item.review_text}
+              <label key={uuid()}>Blurb:</label> {item.review_text}
             </li>
+            <button className='delete-btn' key={uuid()} onClick={() => this.handleDelete(item.reviews_id)}>
+              Delete
+            </button>
           </ul>
-          <button onClick={() => this.handleDelete(item.reviews_id)}>
-            Delete
-          </button>
         </div>
       );
     });
@@ -163,7 +162,7 @@ class Reviews extends Component {
       <div>
         <header>
           <h1>Reviews</h1>
-          <h2>The searchiest of search pages</h2>
+          <h2>...here's all your fav's.</h2>
           {noReviews}
         </header>
         <div key={uuid()}>{displaySavedReviews}</div>
