@@ -11,13 +11,14 @@ class Search extends Component {
       reviewArr: [],
       users_id: "",
       username: "",
+      error: "",
     };
     this.handleMovieTitle = this.handleMovieTitle.bind(this);
   }
 
   componentDidMount() {
     const getUser = localStorage.getItem("username");
-    const url = `https://ancient-savannah-08160.herokuapp.com/api/users/username/${getUser}`;
+    const url = `http://localhost:8000/api/users/username/${getUser}`;
     const options = {
       method: "GET",
       headers: {
@@ -38,12 +39,12 @@ class Search extends Component {
           users_id: data.users_id,
           username: getUser,
         });
-      })
+      });
   }
 
   handleSearch(event) {
     event.preventDefault();
-    const url = `https://ancient-savannah-08160.herokuapp.com/api/search/${this.state.movieTitle}`;
+    const url = `http://localhost:8000/api/search/${this.state.movieTitle}`;
     const options = {
       method: "GET",
       headers: {
@@ -76,7 +77,7 @@ class Search extends Component {
     this.state.reviewArr.filter(item => {
       return item.reviews_id;
     });
-    const url = `https://ancient-savannah-08160.herokuapp.com/api/reviews/savedReview`;
+    const url = `http://localhost:8000/api/reviews/savedReview`;
     const options = {
       method: "POST",
       body: JSON.stringify({
@@ -136,12 +137,17 @@ class Search extends Component {
   };
 
   render() {
+    const errorMessage = this.state.error ? <div>{"Movie title not found"}</div> : "";
+
+    console.log(this.state.error);
     const mapReviewRes = this.state.reviewArr;
     const displaySearchReviews = mapReviewRes.map(item => {
       return (
-        <div className="display-reviews" key={uuid()}>
+        <div className='display-reviews' key={uuid()}>
           <ul key={uuid()}>
-            <h4 className='movie_title' key={uuid()}>{item.movie_title}</h4>
+            <h4 className='movie_title' key={uuid()}>
+              {item.movie_title}
+            </h4>
             <li key={uuid()}>
               <label key={uuid()}>Genre:</label> {item.genre}
             </li>
@@ -168,7 +174,7 @@ class Search extends Component {
     return (
       <div>
         <header>
-            <h1>Search</h1>
+          <h1>Search</h1>
           <h2 className='welcome'>
             Welcome <span>{this.state.username}</span>
           </h2>
@@ -186,6 +192,7 @@ class Search extends Component {
             <button onClick={() => this.handleLogOut()}>Logout</button>
           </Link>
         </section>
+        {errorMessage}
         <form
           className='search-form'
           ref={el => (this.myFormRef = el)}
@@ -203,7 +210,7 @@ class Search extends Component {
           <button type='submit'>Search...</button>
         </form>
 
-        <div key={uuid()} >{displaySearchReviews}</div>
+        <div key={uuid()}>{displaySearchReviews}</div>
       </div>
     );
   }
