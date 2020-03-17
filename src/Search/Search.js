@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import "./App.css";
+import "../App/App.css";
 import {Link, withRouter} from "react-router-dom";
 import uuid from "react-uuid";
 

@@ -1,10 +1,10 @@
 import React, {Component} from "react";
 import "./App.css";
 import {Route, Switch} from "react-router-dom";
-import Landing from "./Landing";
-import PageNotFound from "./PageNotFound";
-import Search from "./Search";
-import Reviews from "./Reviews";
+import Landing from "../Landing/Landing";
+import PageNotFound from "../PageNotFound/PageNotFound";
+import Search from "../Search/Search";
+import Reviews from "../Reviews/Reviews";
 
 class App extends Component {
   render() {

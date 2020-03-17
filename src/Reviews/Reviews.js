@@ -1,8 +1,7 @@
 import React, {Component} from "react";
 import {Link, withRouter} from "react-router-dom";
 import uuid from "uuid";
-
-import "./App.css";
+import "../App/App.css";
 
 class Reviews extends Component {
   constructor(props) {

@@ -1,7 +1,7 @@
 import React, {Component} from "react";
-import TokenService from "./service/token-service";
+import TokenService from "../service/token-service";
 import {withRouter} from "react-router-dom";
-import "./App.css";
+import '../App/App.css'
 
 class Landing extends Component {
   constructor(props) {
