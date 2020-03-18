@@ -79,14 +79,6 @@ class Reviews extends Component {
       });
   }
 
-  removeDelFromDom = index => {
-    const copyArray = Object.assign([], this.state.userReviewArr);
-    copyArray.splice(index, 1);
-    this.setState({
-      userReviewArr: copyArray,
-    });
-  };
-
   handleDelete = reviews_id => {
     let deleteArray = [];
     this.state.savedReviewId.filter(item => {
@@ -106,10 +98,13 @@ class Reviews extends Component {
         if (!res.ok) {
           throw new Error("something went wrong");
         }
+        this.removeDelFromDom(reviews_id);
         return res;
       })
       .then(data => {
-        this.removeDelFromDom();
+        if (data.error) {
+          throw new Error("Somethng went wrong 2");
+        }
       })
       .catch(err => {
         this.setState({
@@ -118,9 +113,19 @@ class Reviews extends Component {
       });
   };
 
+  removeDelFromDom(reviews_id) {
+    const mapUserReviews = this.state.userReviewArr;
+    const flattened = [].concat.apply([], mapUserReviews);
+    const copyArray = Object.assign([], flattened);
+    const result = copyArray.filter(item => item.reviews_id !== reviews_id);
+    this.setState({userReviewArr: result});
+  }
+
   render() {
     const noReviews = this.state.userHasNoSavedReviews ? (
-      <div><h2>You haven't saved any reviews yet.</h2></div>
+      <div>
+        <h2>You haven't saved any reviews yet.</h2>
+      </div>
     ) : (
       ""
     );
@@ -149,7 +154,11 @@ class Reviews extends Component {
             <li key={uuid()}>
               <label key={uuid()}>Blurb:</label> {item.review_text}
             </li>
-            <button className='delete-btn' key={uuid()} onClick={() => this.handleDelete(item.reviews_id)}>
+            <button
+              className='delete-btn'
+              key={uuid()}
+              onClick={() => this.handleDelete(item.reviews_id)}
+            >
               Delete
             </button>
           </ul>
