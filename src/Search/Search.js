@@ -128,16 +128,33 @@ class Search extends Component {
     localStorage.clear();
   };
 
-  removeSavedFromDom = index => {
+  /*   removeSavedFromDom = index => {
     const copyArray = Object.assign([], this.state.reviewArr);
     copyArray.splice(index, 1);
     this.setState({
       reviewArr: copyArray,
     });
-  };
+  }; */
 
+  removeSavedFromDom (event) {
+    const copyArray = Object.assign([], this.state.reviewArr);
+    copyArray.filter(item => item !== event.target.value);
+    this.setState({reviewArr: copyArray})
+  };
+/* 
+  removeSavedFromDom(e) {
+    let filterArray = this.state.reviewArr.filter(
+      item => item !== e.target.value
+    );
+    this.setState({reviewArr: filterArray});
+  }
+ */
   render() {
-    const errorMessage = this.state.error ? <div>{"Movie title not found"}</div> : "";
+    const errorMessage = this.state.error ? (
+      <div>{"Movie title not found"}</div>
+    ) : (
+      ""
+    );
 
     console.log(this.state.error);
     const mapReviewRes = this.state.reviewArr;
