@@ -10,6 +10,7 @@ class Reviews extends Component {
       userReviewArr: [],
       savedReviewId: [],
       userHasNoSavedReviews: null,
+      refreshDelete: null,
     };
   }
 
@@ -84,8 +85,7 @@ class Reviews extends Component {
     this.state.savedReviewId.filter(item => {
       return item.reviews_id === reviews_id ? deleteArray.push(item.id) : null;
     });
-
-    const url = `http://localhost:8000/api/reviews/savedReview/${deleteArray}`;
+    const url = `http://localhost:8000/api/reviews/savedReview/${deleteArray[0]}`;
     const options = {
       method: "DELETE",
       headers: {
@@ -98,13 +98,13 @@ class Reviews extends Component {
         if (!res.ok) {
           throw new Error("something went wrong");
         }
-        this.removeDelFromDom(reviews_id);
         return res;
       })
       .then(data => {
         if (data.error) {
           throw new Error("Somethng went wrong 2");
         }
+        this.removeDelFromDom(reviews_id);
       })
       .catch(err => {
         this.setState({
@@ -118,7 +118,9 @@ class Reviews extends Component {
     const flattened = [].concat.apply([], mapUserReviews);
     const copyArray = Object.assign([], flattened);
     const result = copyArray.filter(item => item.reviews_id !== reviews_id);
-    this.setState({userReviewArr: result});
+    this.setState({
+      userReviewArr: result,
+    });
   }
 
   render() {
