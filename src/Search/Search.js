@@ -129,7 +129,6 @@ class Search extends Component {
   };
 
   removeSavedFromDom(reviews_id) {
-    console.log(this.state.reviewArr);
     const copyArray = Object.assign([], this.state.reviewArr);
     const result = copyArray.filter(item => item.reviews_id !== reviews_id);
     this.setState({reviewArr: result});
