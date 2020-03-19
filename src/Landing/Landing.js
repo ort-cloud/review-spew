@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import TokenService from "../service/token-service";
 import {withRouter} from "react-router-dom";
-import '../App/App.css'
+import "../App/App.css";
 
 class Landing extends Component {
   constructor(props) {
@@ -140,7 +140,7 @@ class Landing extends Component {
         <main>
           <header>
             <h1>Review Spew</h1>
-            <p className="about">
+            <p className='about'>
               Stuck trying to figure out what to watch? Maybe you’re a movie
               nerd and you’re not sure if the dubbed German toture-horror, or
               the sci fi/thriller/space noir is right for your blog? Maybe it’s
@@ -181,7 +181,7 @@ class Landing extends Component {
             </p>
           </header>
 
-          <section className="splatter-section" >
+          <section className='splatter-section'>
             <h2>Check it out!</h2>
 
             <h3>Demo Login</h3>
@@ -198,7 +198,7 @@ class Landing extends Component {
           <section>
             <form className='form' onSubmit={loginOrSignup}>
               <div>
-                <label className="landing-label">Username</label>
+                <label className='landing-label'>Username</label>
                 <input
                   required
                   type='text'
@@ -206,7 +206,7 @@ class Landing extends Component {
                 />
               </div>
               <div>
-                <label className="landing-label">Password</label>
+                <label className='landing-label'>Password</label>
                 <input
                   required
                   type='password'

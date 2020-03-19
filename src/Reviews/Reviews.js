@@ -56,7 +56,10 @@ class Reviews extends Component {
               savedReviewId: savedIdArray,
             });
             const promises = idArray.map(item => {
-              return fetch(`https://ancient-savannah-08160.herokuapp.com/api/reviews/${item}`, options)
+              return fetch(
+                `https://ancient-savannah-08160.herokuapp.com/api/reviews/${item}`,
+                options
+              )
                 .then(res => {
                   if (!res.ok) {
                     throw new Error("Oh, no. Error!");

@@ -1,7 +1,7 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
+import ReactDOM from "react-dom";
 import {BrowserRouter} from "react-router-dom";
-import PageNotFound from './PageNotFound';
+import PageNotFound from "./PageNotFound";
 
 it("renders without crashing", () => {
   const div = document.createElement("div");

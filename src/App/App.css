@@ -1,8 +1,5 @@
 @import url("https://fonts.googleapis.com/css?family=Monoton|Roboto&display=swap");
 
-/* ffont-family: 'Monoton', cursive;
-font-family: 'Roboto', sans-serif; */
-
 * {
   box-sizing: border-box;
   margin: 0;
@@ -110,7 +107,7 @@ button:active {
   top: 1px;
 }
 
-input{
+input {
   margin: 1.25%;
   padding: 1%;
   -webkit-border-top-left-radius: 5px;
@@ -136,11 +133,13 @@ a {
   color: inherit;
 }
 
-a:hover, a:active, a:visited {
+a:hover,
+a:active,
+a:visited {
   color: whitesmoke;
 }
 
-.search-form{
+.search-form {
   margin-top: 15%;
 }
 
@@ -155,13 +154,13 @@ a:hover, a:active, a:visited {
   margin-bottom: 1.5%;
 }
 
-.splatter-section{
+.splatter-section {
   margin-top: 10%;
   margin-bottom: 3%;
 }
 
 @media only screen and (min-width: 480px) {
-  p{
+  p {
     font-size: 3vw;
   }
 
@@ -183,7 +182,7 @@ a:hover, a:active, a:visited {
   }
 
   h1 {
-    font-size:7vw;
+    font-size: 7vw;
     margin-bottom: 5%;
   }
 
@@ -191,7 +190,6 @@ a:hover, a:active, a:visited {
     text-align: center;
     margin-left: 10%;
     margin-right: 10%;
-    
   }
 
   .splatter {
@@ -227,5 +225,4 @@ a:hover, a:active, a:visited {
   .movie_title {
     font-size: 2.75vw;
   }
-
 }
